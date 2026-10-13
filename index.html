@@ -1,207 +1,637 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تعبئة سجل التقييم الذكية</title>
-    <!-- استيراد خط كايرو (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-gradient: linear-gradient(135deg, #f8fafc 100%, #e2e8f0 0%);
-            --card-bg: #ffffff;
-            --text-color: #1e293b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<meta name="description" content="سجل المعلم — أداة ذكية لتعبئة سجل التقييم المدرسي بأسماء الطلاب آلياً. اختر مدرستك وفصلك وحمّل السجل جاهزاً للطباعة.">
+<title>سجل المعلم | تعبئة سجل التقييم المدرسي</title>
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            margin: 0;
-            padding: 15px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Marhey:wght@400;700&family=Rakkas&family=Caveat:wght@400..700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/modern.css?v=6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='26' fill='%234f46e5'/><text y='72' x='50' text-anchor='middle' font-size='56'>&#128221;</text></svg>">
 
-        .container {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 650px;
-            padding: 35px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
-            box-sizing: border-box;
-        }
-
-        h1 {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            text-align: center;
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #334155;
-        }
-
-        textarea, select, input[type="number"] {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 14px;
-            font-family: 'Cairo', sans-serif;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-            color: #1e293b;
-        }
-
-        textarea:focus, select:focus, input[type="number"]:focus {
-            border-color: var(--primary);
-            background: #fff;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            height: 150px;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .col {
-            flex: 1;
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
-            margin-top: 10px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        #status {
-            text-align: center;
-            margin-top: 18px;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .footer {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 13px;
-            color: #475569;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 15px;
-            font-weight: 700;
-        }
-
-        .footer span {
-            color: var(--primary);
-            font-weight: 900;
-        }
-
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .container { padding: 20px; }
-            .row { flex-direction: column; gap: 0; }
-        }
-    </style>
-    <!-- تضمين مكتبة PDFLib -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<!-- التحويل التلقائي إلى النسخة المبسطة على الأجهزة القديمة -->
+<script>
+(function () {
+  function oldDevice() {
+    var ua = navigator.userAgent;
+    var noCss = !window.CSS || !CSS.supports || !CSS.supports('display', 'grid') || !CSS.supports('color', 'var(--x)');
+    var noJs  = !window.Promise || !window.addEventListener || !document.querySelectorAll;
+    var oldUa = /MSIE |Trident\/|Edge\/1[0-2]|Android [234]\.|Opera Mini|UCBrowser|Midp/i.test(ua);
+    return noCss || noJs || oldUa;
+  }
+  var forced = false;
+  try { forced = localStorage.getItem('mansa_force_modern') === '1'; } catch (e) {}
+  if (oldDevice() && !forced) { location.replace('legacy.html?auto=1'); }
+  window.__MANSA_OLD__ = oldDevice();
+}());
+</script>
 </head>
+
 <body>
+<a class="skip" href="#app">تخطَّ إلى الأداة</a>
+<div class="scroll-progress"><span id="scrollBar"></span></div>
 
-<div class="container">
-    <h1>سجل التقييم المدرسي</h1>
-    <div class="subtitle">أداة ذكية لكتابة وتوزيع اسماء الطلاب آليا في السجلات المدرسية</div>
+<!-- ======================== شريط التنقل ======================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z"/>
+          <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v4H6.5"/>
+          <path d="M8 7h7M8 11h5"/>
+        </svg>
+      </span>
+      <span>سجل المعلم<small>سجل التقييم الذكي</small></span>
+    </a>
 
-    <div class="form-group">
-        <label for="recordType">اختر المرحلة / السجل:</label>
-        <select id="recordType">
-            <option value="first_secondary">الصف الأول الثانوي</option>
-            <option value="second_secondary_bac">الصف الثاني الثانوي - باكالوريا</option>
-            <option value="second_secondary_general">الصف الثاني الثانوي - عام</option>
-        </select>
+    <nav class="nav-links" id="navLinks">
+      <a href="#how">كيف يعمل؟</a>
+      <a href="#time">الوقت الموفّر</a>
+      <a href="#app">الأداة</a>
+      <a href="#fonts">الخطوط</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" title="تبديل الوضع الليلي" aria-label="تبديل الوضع الليلي">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+      </button>
+      <a class="btn btn-sm" href="#app">ابدأ الآن</a>
+      <button class="icon-btn burger" id="burger" aria-label="القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="heroSec">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-glow" id="heroGlow"></div>
+
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> منصة مدرسية ذكية — ١٥٧٧ اسم جاهز</span>
+
+      <h1>
+        سجل المعلم
+        <span class="grad">في ثوانٍ معدودة</span>
+        <span class="scribble hand">بدل ما تكتب السجلات بايدك</span>
+      </h1>
+
+      <p class="lead">
+        اختر مدرستك ثم مرحلتك ثم فصلك — فتُكتب الأسماء في سجل التقييم تلقائياً بخط واضح ومحاذاة مثالية،
+        ويُحمَّل الملف جاهزاً للطباعة في نفس اللحظة.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-lg" href="#app">
+          ابدأ التعبئة الآن
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+        <a class="btn btn-lg btn-ghost" href="#time">كم يوفّر الوقت؟</a>
+      </div>
+
+      <div class="stats" id="stats">
+        <div class="stat"><b data-count="1">0</b><span>مدرسة</span></div>
+        <div class="stat"><b data-count="34">0</b><span>فصل دراسي</span></div>
+        <div class="stat"><b data-count="1577">0</b><span>اسم طالب</span></div>
+        <div class="stat"><b data-count="27">0</b><span>خط متاح</span></div>
+      </div>
     </div>
 
-    <div class="form-group">
-        <label for="studentNames">أسماء الطلاب (كل اسم في سطر مستقل):</label>
-        <textarea id="studentNames" placeholder="اكتب أو الصق أسماء الطلاب هنا..."></textarea>
+    <!-- ======= مصباح + دفتر + قلم يكتب ======= -->
+    <div class="hero-art">
+      <div class="frame scene-frame">
+<svg class="scene" viewBox="0 0 560 420" role="img"
+     aria-label="رسم لمصباح مكتبي يضيء دفتر سجل مفتوح، وقلم يكتب أسماء الطلاب داخله">
+  <defs>
+    <linearGradient id="mBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#121c38"/><stop offset="1" stop-color="#070b18"/>
+    </linearGradient>
+    <radialGradient id="mGlow" cx="118" cy="150" r="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd79a" stop-opacity=".7"/>
+      <stop offset=".38" stop-color="#fbbf24" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mCone" x1="118" y1="160" x2="300" y2="350" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe6ad" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffe6ad" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="mPage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf7"/><stop offset="1" stop-color="#e9e0cc"/>
+    </linearGradient>
+    <linearGradient id="mHead" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e6ebff"/><stop offset="1" stop-color="#c3cffa"/>
+    </linearGradient>
+    <linearGradient id="mShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#64759c"/><stop offset="1" stop-color="#222b42"/>
+    </linearGradient>
+    <linearGradient id="mPen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="mDesk" x1="0" y1="340" x2="0" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#71503a"/><stop offset=".14" stop-color="#3f2c1e"/><stop offset="1" stop-color="#1a1109"/>
+    </linearGradient>
+    <filter id="mBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="mBlurS" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="2.4"/>
+    </filter>
+    <path id="mName" d="M0 3c8-8 13 8 17 0 5-7 10 7 17 0 8-8 13 7 17-1 5-7 10 6 17-1 8-8 13 7 17-2 5-7 10 6 17-1 8-8 13 7 17-2 5-7 9 5 13-2"/>
+    <path id="mNo" d="M0 2c4-4 7 4 9 0 4-3 6 3 10-1"/>
+  </defs>
+
+  <rect width="560" height="420" fill="url(#mBg)"/>
+  <rect width="560" height="420" fill="url(#mGlow)" class="sc-glow"/>
+
+  <g class="sc-cone" style="mix-blend-mode:screen">
+    <path d="M84 152 L152 152 L392 344 L40 344 Z" fill="url(#mCone)"/>
+  </g>
+
+  <g fill="#ffe6ad">
+    <circle class="sc-spark" cx="228" cy="86" r="3.4" style="animation-delay:-.4s"/>
+    <circle class="sc-spark" cx="64" cy="236" r="2.2" style="animation-delay:-1.8s"/>
+    <circle class="sc-spark" cx="486" cy="104" r="2.6" style="animation-delay:-3.1s"/>
+  </g>
+
+  <rect x="0" y="340" width="560" height="80" fill="url(#mDesk)"/>
+  <rect x="0" y="339" width="560" height="2" fill="#ffd79a" opacity=".3"/>
+
+  <!-- ===== المصباح ===== -->
+  <g class="sc-float">
+    <ellipse cx="118" cy="344" rx="34" ry="8" fill="#000" opacity=".5" filter="url(#mBlur)"/>
+    <path d="M118 336 C 118 284, 116 216, 118 166" stroke="#39496c" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <circle cx="118" cy="252" r="7" fill="#4a5c85"/>
+    <ellipse cx="118" cy="340" rx="32" ry="9" fill="#2f3f60"/>
+    <ellipse cx="118" cy="337" rx="32" ry="9" fill="#4b5f8b"/>
+    <path d="M78 162 a40 40 0 0 1 80 0 z" fill="url(#mShade)"/>
+    <path d="M92 160 a26 26 0 0 1 52 0 z" fill="#ffe6ad" opacity=".9"/>
+    <circle cx="118" cy="170" r="18" fill="#fff4d0" opacity=".85" filter="url(#mBlurS)"/>
+    <rect x="74" y="157" width="88" height="7" rx="3.5" fill="#5b6d94"/>
+  </g>
+
+  <!-- ===== الدفتر ===== -->
+  <ellipse cx="355" cy="342" rx="158" ry="13" fill="#000" opacity=".55" filter="url(#mBlur)"/>
+
+  <rect x="204" y="144" width="300" height="200" rx="13" fill="#33406a"/>
+  <rect x="211" y="151" width="286" height="186" rx="8" fill="url(#mPage)"/>
+  <path d="M211 159 a8 8 0 0 1 8-8 h270 a8 8 0 0 1 8 8 v33 h-286 z" fill="url(#mHead)"/>
+  <g stroke="#ffffff" stroke-width="2.4" opacity=".95">
+    <path d="M432 151 v41M340 151 v41"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" opacity=".95">
+    <path d="M224 168 h48M228 180 h40"/>
+    <path d="M352 174 h66"/>
+    <path d="M448 174 h34"/>
+  </g>
+  <g stroke="#c6d1e5" stroke-width="1.8">
+    <path d="M211 216 h286M211 240 h286M211 264 h286M211 288 h286M211 312 h286"/>
+  </g>
+  <g stroke="#93a3bd" stroke-width="1.8" opacity=".85">
+    <path d="M432 192 v145M340 192 v145"/>
+  </g>
+  <path d="M211 159 h12 v178 h-12 z" fill="#0f172a" opacity=".06"/>
+
+  <g transform="translate(422,208) scale(-1,1)"><use href="#mName" class="sc-ink sc-n1" stroke="#1e293b" stroke-width="2.8"/></g>
+  <g transform="translate(422,232) scale(-1,1)"><use href="#mName" class="sc-ink sc-n2" stroke="#1e293b" stroke-width="2.8"/></g>
+  <g transform="translate(422,256) scale(-1,1)"><use href="#mName" class="sc-ink sc-n3" stroke="#1e293b" stroke-width="2.8"/></g>
+  <g transform="translate(422,280) scale(-1,1)"><use href="#mName" class="sc-ink sc-n4" stroke="#1e293b" stroke-width="2.8"/></g>
+
+  <g transform="translate(466,208) scale(-1,1)"><use href="#mNo" class="sc-no sc-o1"/></g>
+  <g transform="translate(466,232) scale(-1,1)"><use href="#mNo" class="sc-no sc-o2"/></g>
+  <g transform="translate(466,256) scale(-1,1)"><use href="#mNo" class="sc-no sc-o3"/></g>
+  <g transform="translate(466,280) scale(-1,1)"><use href="#mNo" class="sc-no sc-o4"/></g>
+
+  <g transform="translate(262,306)">
+    <g class="sc-stamp" transform="rotate(-14)">
+      <circle r="27" fill="none" stroke="#10b981" stroke-width="3.4"/>
+      <circle r="21" fill="none" stroke="#10b981" stroke-width="1.4" stroke-dasharray="4 5"/>
+      <path d="M-9 1l7 8 13-16" fill="none" stroke="#10b981" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- ===== القلم ===== -->
+  <g class="sc-pen">
+    <circle class="sc-pentip" cx="0" cy="0" r="10" fill="#fde68a" opacity=".5" filter="url(#mBlurS)"/>
+    <g transform="rotate(24)">
+      <path d="M-6 -18 L-3.6 -88 L3.6 -88 L6 -18 Z" fill="url(#mPen)"/>
+      <path d="M-1.6 -88 L-1.6 -18" stroke="#ffffff" stroke-width="1.3" opacity=".5"/>
+      <rect x="-7" y="-48" width="14" height="6" rx="2.5" fill="#0f172a" opacity=".7"/>
+      <path d="M0 0 L-6.5 -19 L6.5 -19 Z" fill="#e2e8f0"/>
+      <path d="M0 0 L-2.6 -8 L2.6 -8 Z" fill="#1e293b"/>
+      <rect x="-7.2" y="-97" width="14.4" height="9" rx="4" fill="#111827"/>
+    </g>
+  </g>
+</svg>
+      </div>
+
+      <div class="float-card fc1"><span class="i" style="background:#e0e7ff">⚡</span> توليد مباشر</div>
+      <div class="float-card fc2"><span class="i" style="background:#d1fae5">✔</span> 34 فصلاً جاهزاً</div>
+      <div class="float-card fc3"><span class="i" style="background:#fef3c7">🖋️</span> 27 خطاً عربياً</div>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span></span></div>
+</section>
+
+<!-- ========================= كيف يعمل ========================= -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-tag">الخطوات</span>
+      <h2>ثلاث خطوات فقط</h2>
+      <p>من اختيار المدرسة حتى تحميل السجل — بدون كتابة ولا لصق.</p>
     </div>
 
-    <div class="row">
-        <div class="form-group col">
-            <label for="maxFontSize">حجم الخط الأقصى:</label>
-            <input type="number" id="maxFontSize" value="12" min="8" max="20">
+    <div class="steps three">
+      <div class="step" data-reveal style="--d:.05s">
+        <div class="no">١</div><h3>المدرسة والمرحلة</h3>
+        <p>اختر مدرستك، ثم الصف، ثم نوع السجل (بكالوريا أو عام).</p>
+      </div>
+      <div class="step" data-reveal style="--d:.15s">
+        <div class="no">٢</div><h3>الفصل</h3>
+        <p>اختر الفصل فقط… وتُحمَّل أسماء طلابه تلقائياً خلال ثانية.</p>
+      </div>
+      <div class="step" data-reveal style="--d:.25s">
+        <div class="no">٣</div><h3>اضغط «توليد»</h3>
+        <p>مع معاينة حيّة للخط والمحاذاة — والملف يُحمَّل مباشرة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== الوقت الذي يوفّره الموقع ======================== -->
+<section class="sec" id="time" style="padding-block-start:0">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-tag">⏱ وقتك ثمين</span>
+      <h2>كم يوفّر لك «سجل المعلم» من الوقت؟</h2>
+      <p>المعلّم لا يطبع إلا مرة واحدة في السنة، لرصد درجات طلابه خلال العام كله. احسب الوقت الذي تسترده:</p>
+    </div>
+
+    <div class="time-grid">
+      <article class="time-card" data-reveal>
+        <div class="clock">🖨️</div>
+        <div class="saved">≈ ١ ساعة و٥٢ دقيقة</div>
+        <div class="old">الكتابة اليدوية: ساعة و٥٣ دقيقة</div>
+        <h3>٥ سجلات (≈ ٢٢٥ اسماً)</h3>
+        <p>لأن المعلّم يطبع مرة واحدة فقط، لرصد درجات طلابه خلال العام كله.</p>
+      </article>
+
+      <article class="time-card" data-reveal style="--d:.08s">
+        <div class="clock">📚</div>
+        <div class="saved">≈ ٣ ساعات و٣٨ دقيقة</div>
+        <div class="old">الكتابة اليدوية: ٣ ساعات و٤٠ دقيقة</div>
+        <h3>١٠ سجلات (≈ ٤٤٠ اسماً)</h3>
+        <p>يومان من التسجيل يصبحان أقل من دقيقتين.</p>
+      </article>
+
+      <article class="time-card" data-reveal style="--d:.16s">
+        <div class="clock">📅</div>
+        <div class="saved">يوم كامل = ٥ د</div>
+        <div class="old">يومان كاملان من الكتابة اليدوية</div>
+        <h3>تجهيز سجلات أسبوع كامل</h3>
+        <p>خمس سجلات جاهزة للطباعة في أقل من دقيقة واحدة.</p>
+      </article>
+
+      <article class="time-card" data-reveal style="--d:.24s">
+        <div class="clock">✅</div>
+        <div class="saved">صفر أخطاء</div>
+        <div class="old">تدقيق ٢٢٥ اسماً يدوياً</div>
+        <h3>لا تكرار ولا خطأ إملائي</h3>
+        <p>الأسماء تُنسخ كما هي بدقة، دون نسيان أو تكرار.</p>
+      </article>
+    </div>
+
+    <!-- الحاسبة -->
+    <div class="calc" data-reveal="zoom">
+      <div class="calc-row">
+        <div>
+          <label class="lbl" for="calcClasses"><span class="num">🧮</span> كم سجلاً تطبع؟</label>
+          <input type="range" class="range" id="calcClasses" min="1" max="15" value="5">
+          <div class="range-scale"><span>سجل واحد</span><span id="calcClassesVal">٥ سجلات</span><span>١٥ سجلاً</span></div>
         </div>
-        <div class="form-group col">
-            <label for="fontFamily">نوع الخط:</label>
-            <select id="fontFamily">
-                <option value="system-ui, -apple-system, sans-serif">خط النظام الافتراضي</option>
-                <option value="Cairo">خط كايرو (Cairo)</option>
-                <option value="Tajawal">خط تجوال (Tajawal)</option>
-                <option value="Amiri">خط أميري (Amiri)</option>
-            </select>
+        <div>
+          <label class="lbl" for="calcNames"><span class="num">📝</span> متوسط عدد الطلاب بالسجل</label>
+          <input type="range" class="range" id="calcNames" min="20" max="50" value="45">
+          <div class="range-scale"><span>٢٠</span><span id="calcNamesVal">٤٥ طالباً</span><span>٥٠</span></div>
         </div>
+      </div>
+
+      <div class="calc-out">
+        <div style="flex:1;min-width:200px">
+          <small>الوقت الذي توفّره</small>
+          <span class="val" id="outSaved" style="font-size:clamp(1.6rem,5vw,2.6rem)">—</span>
+        </div>
+        <div style="text-align:center">
+          <small>يدوياً</small>
+          <b id="outManual" style="display:block;font-size:1.05rem;color:var(--txt-2)">—</b>
+        </div>
+        <div style="text-align:center">
+          <small>مع المنصة</small>
+          <b id="outFast" style="display:block;font-size:1.05rem;color:var(--emerald-500)">—</b>
+        </div>
+      </div>
+      <p class="hint center" style="margin-top:.8rem">الحسبة على أساس ٣٠ ثانية لكل اسم عند الكتابة اليدوية، و≈ ١٢ ثانية لكل سجل مع المنصة. أول سجل قد يستغرق وقتاً أطول لتحميل القالب.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== الأداة ========================== -->
+<section class="sec app-shell" id="app" style="padding-block-start:0">
+  <div class="wrap">
+    <div class="app-card" data-reveal="zoom">
+
+      <div class="app-top">
+        <div>
+          <h2>لوحة التعبئة</h2>
+          <p>اختياراتك محفوظة تلقائياً — وتوليد مباشر بضغطة واحدة</p>
+        </div>
+        <div class="badges">
+          <span class="badge" id="badgeSchool">🏫 مدرسة</span>
+          <span class="badge" id="badgeStage">📚 مرحلة</span>
+          <span class="badge" id="badgeClass">🚪 فصل</span>
+        </div>
+      </div>
+
+      <div class="app-body">
+
+        <!-- ================= العمود الرئيسي ================= -->
+        <div class="app-main">
+
+          <!-- 1 المدرسة -->
+          <div class="field">
+            <span class="lbl"><span class="num">١</span> اختر المدرسة</span>
+            <div class="school-grid" id="schoolGrid" role="radiogroup" aria-label="المدرسة"></div>
+          </div>
+
+          <!-- 2 المرحلة (تُخفى في الوضع اليدوي) -->
+          <div class="field" id="stageField">
+            <span class="lbl"><span class="num">٢</span> اختر المرحلة</span>
+            <div class="seg" id="stageTabs" role="tablist" aria-label="المرحلة"></div>
+            <div id="pdfField" style="margin-top:.8rem;display:none">
+              <span class="hint" style="display:block;margin-bottom:.45rem">نوع السجل (نماذج الـ PDF)</span>
+              <div class="seg" id="pdfTabs" role="tablist" aria-label="نوع السجل"></div>
+            </div>
+          </div>
+
+          <!-- 3 الفصل -->
+          <div class="field" id="classField">
+            <span class="lbl"><span class="num">٣</span> اختر الفصل</span>
+            <div class="class-grid" id="classGrid" role="radiogroup" aria-label="الفصل"></div>
+          </div>
+
+          <!-- 4 الأسماء (تلقائية) -->
+          <div class="field" id="namesField">
+            <span class="lbl"><span class="num">٤</span> أسماء الطلاب</span>
+
+            <div class="auto-names" id="autoNames">
+              <span class="ic" id="autoIcon">📄</span>
+              <span>
+                <b id="autoTitle">اختر الفصل لتحميل الأسماء</b>
+                <small id="autoSub">تُحمَّل قائمة الفصل تلقائياً — لا حاجة للكتابة</small>
+              </span>
+            </div>
+
+            <!-- الوضع اليدوي: مدرستي غير موجودة -->
+            <div class="manual" id="manualBox">
+              <label class="hint" for="customType" style="display:block;margin-bottom:.4rem">نوع السجل</label>
+              <select id="customType">
+                <option value="first_secondary">الصف الأول الثانوي</option>
+                <option value="second_secondary_bac">الصف الثاني الثانوي — بكالوريا</option>
+                <option value="second_secondary_general">الصف الثاني الثانوي — عام</option>
+              </select>
+              <label class="hint" for="customNames" style="display:block;margin:.9rem 0 .4rem">اكتب كل اسم في سطر مستقل</label>
+              <textarea id="customNames" spellcheck="false"
+                placeholder="محمد عبد الله علي حسن&#10;مريم انتوني لويس&#10;نورهان احمد عبدالرحمن حسن"></textarea>
+              <div class="names-meta">
+                <span class="pill" id="customCount">٠ اسم</span>
+                <div class="row-btns">
+                  <button class="btn btn-sm btn-ghost" id="customFileBtn">استيراد ملف txt</button>
+                  <input type="file" id="customFile" accept=".txt,text/plain" hidden>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= العمود الجانبي ================= -->
+        <aside class="app-side">
+          <div class="set-row">
+            <span class="t">نوع الخط <em id="fontLabel">—</em></span>
+            <select id="fontSelect" aria-label="نوع الخط"></select>
+            <span class="hint">الخطوط تُحمَّل عند اختيارها فقط لتوفير سرعة التصفح.</span>
+          </div>
+
+          <div class="set-row">
+            <span class="t">محاذاة الاسم <em id="alignLabel">يمين</em></span>
+            <div class="align-group" id="alignGroup" role="radiogroup" aria-label="محاذاة الاسم">
+              <button type="button" data-align="right" class="on">
+                <span class="ln a-rtl"><i></i><i></i><i></i></span> يمين
+              </button>
+              <button type="button" data-align="center">
+                <span class="ln a-ctr"><i></i><i></i><i></i></span> وسط
+              </button>
+              <button type="button" data-align="left">
+                <span class="ln a-ltr"><i></i><i></i><i></i></span> يسار
+              </button>
+            </div>
+          </div>
+
+          <div class="set-row">
+            <span class="t">حجم الخط الأقصى <em id="sizeLabel">12</em></span>
+            <input type="range" class="range" id="fontSize" min="8" max="20" step="1" value="12" aria-label="حجم الخط">
+            <div class="range-scale"><span>٨</span><span>١٤</span><span>٢٠</span></div>
+          </div>
+
+          <div class="set-row">
+            <span class="t">لون نص الأسماء <em id="colorLabel">أسود</em></span>
+            <div class="color-row">
+              <label class="color-picker" title="اختر لوناً مخصصاً">
+                <input type="color" id="textColor" value="#000000" aria-label="لون نص الأسماء">
+                <span class="sw-ico" id="colorSwatchIco" style="background:#000"></span>
+              </label>
+              <div class="swatches" id="colorSwatches">
+                <button type="button" class="sw on" data-color="#000000" style="background:#000" title="أسود"></button>
+                <button type="button" class="sw" data-color="#1d4ed8" style="background:#1d4ed8" title="أزرق"></button>
+                <button type="button" class="sw" data-color="#b91c1c" style="background:#b91c1c" title="أحمر"></button>
+                <button type="button" class="sw" data-color="#047857" style="background:#047857" title="أخضر"></button>
+                <button type="button" class="sw" data-color="#7e22ce" style="background:#7e22ce" title="بنفسجي"></button>
+                <button type="button" class="sw" data-color="#c2410c" style="background:#c2410c" title="برتقالي"></button>
+                <button type="button" class="sw" data-color="#0f766e" style="background:#0f766e" title="تركوازي"></button>
+                <button type="button" class="sw" data-color="#6b7280" style="background:#6b7280" title="رمادي"></button>
+              </div>
+            </div>
+            <span class="hint">يُطبَّق اللون على الأسماء داخل السجل مباشرة.</span>
+          </div>
+
+          <div class="set-row">
+            <span class="t">معاينة الخانة</span>
+            <div class="preview">
+              <canvas id="previewCanvas" width="360" height="120"></canvas>
+              <span class="cap" id="previewCap">معاينة تقريبية</span>
+            </div>
+          </div>
+
+          <div class="run">
+            <button class="btn" id="generateBtn">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+              توليد السجل وتحميله
+            </button>
+            <div class="progress" id="progress"><i id="progressBar"></i></div>
+            <div class="status" id="status"></div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== الخطوط ========================== -->
+<section class="sec" id="fonts" style="background:var(--surface-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-tag">٢٧ خطاً عربياً</span>
+      <h2>اختر الخط الذي يناسب سجل مدرستك</h2>
+      <p>خطوط حديثة ونسخية وكوفية وخطوط بخط اليد ورقيعة — كلها مطابقة تماماً كما تراها في المعاينة.</p>
+    </div>
+    <div class="f-grid">
+      <article class="f-card" data-reveal>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 20h6M12 5v15"/></svg></div>
+        <h3>خطوط حديثة</h3>
+        <p>كايرو، وزیر، تجوال، المراعي، بلكس عربي، الإسكندرية، تشانجا، مدى، هارمتان، المسيري.</p>
+      </article>
+      <article class="f-card" data-reveal style="--d:.06s">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>خطوط نسخية</h3>
+        <p>أميري، نوتو نسخ، لضيف، شهرزاد، كتيبة — للاستخدام الرسمي في السجلات.</p>
+      </article>
+      <article class="f-card" data-reveal style="--d:.12s">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+        <h3>خطوط كوفية وزخرفية</h3>
+        <p>نوتو كوفي، ريم كوفي، لاليزار، بلاكا، قاهري.</p>
+      </article>
+      <article class="f-card" data-reveal style="--d:.18s">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-6 6-9 9-9s6 3 9 9M8 21h8"/></svg></div>
+        <h3>خطوط بخط اليد والرقية</h3>
+        <p>مِرِح، هندجيت، فايبس، عارف رقعة، رقعة إنك، رَكّاس، گُلزار.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= التواصل ============================ -->
+<section class="sec" id="contact" style="padding-block-start:0">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="sec-tag">لإضافة مدرستك</span>
+      <h2>تواصل معنا</h2>
+      <p>لتضافة مدرسة جديدة أو فصولها أو قوالب سجلاتها، أرسل لنا رسالة وسنقوم بالباقي.</p>
     </div>
 
-    <button id="generateBtn">توليد وتحميل السجل 🚀</button>
+    <div class="contact-grid">
+      <div data-reveal="right">
+        <a class="mail-card" href="mailto:mnst.altalib@gmail.com?subject=%D8%A5%D8%B6%D8%A7%D9%81%D8%A9%20%D9%85%D8%AF%D8%B1%D8%B3%D8%A9%20%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9">
+          <span class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          </span>
+          <span>
+            <small>لإضافة مدرستك تواصل معنا على</small>
+            <b>mnst.altalib@gmail.com</b>
+          </span>
+          <span class="go">‹</span>
+        </a>
 
-    <div id="status"></div>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem">
+          <a class="btn btn-ghost btn-sm" href="mailto:mnst.altalib@gmail.com">إرسال رسالة</a>
+          <a class="btn btn-ghost btn-sm" href="#app">استخدام «مدرستي غير موجودة»</a>
+          <a class="btn btn-ghost btn-sm" href="legacy.html">النسخة المبسطة</a>
+        </div>
+      </div>
 
-    <div class="footer">
-        <span>عمل وتطوير الطالب: علي ياسر أحمد محمد</span>
+      <div class="panel" data-reveal="left">
+        <h3>ما الذي ترسله لنا؟</h3>
+        <ol class="steps-list">
+          <li><b>اسم المدرسة</b> واسم المرحلة (أولى ثانوي / ثاني ثانوي).</li>
+          <li><b>عدد الفصول</b> في كل مرحلة.</li>
+          <li><b>ملفات قوائم الطلاب</b> بصيغة نص (اسم في كل سطر) أو PDF.</li>
+        </ol>
+        <p class="hint" style="margin-top:.9rem">أو استخدم زر <b>«مدرستي غير موجودة»</b> في الأداة لتوليد سجلاتك فوراً دون انتظار.</p>
+      </div>
     </div>
-</div>
+  </div>
+</section>
 
-<script src="app.js"></script>
+</main>
+
+<!-- ============================ التذييل ============================ -->
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a href="#top" class="brand" style="margin-bottom:.8rem">
+        <span class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M8 7h7M8 11h5"/>
+          </svg>
+        </span>
+        <span>سجل المعلم<small>سجل التقييم الذكي</small></span>
+      </a>
+      <p>منصة تعبئة سجل التقييم المدرسي — بسيطة، سريعة، وتعمل على كل الأجهزة.</p>
+
+      <div class="esig" id="esig">
+        <span class="txt">Ali Yasser Ahmed</span>
+        <svg class="flourish" viewBox="0 0 230 22" aria-hidden="true">
+          <path d="M4 14c22 7 40-4 34-6-5-2-9 8 1 9 15 1 22-11 17-13-4-1-8 7 4 8 17 1 29-7 41-6 10 1 12 6 21 5 10-2 16-9 25-8 7 1 8 7 16 5 9-2 15-8 23-7 5 1 6 4 15 3 7-1 12-5 18-4"/>
+        </svg>
+        <span class="cap">Designed &amp; developed by</span>
+      </div>
+    </div>
+
+    <div>
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#app">لوحة التعبئة</a></li>
+        <li><a href="#how">كيف يعمل؟</a></li>
+        <li><a href="#time">الوقت الموفّر</a></li>
+        <li><a href="#fonts">الخطوط</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>النسخ</h4>
+      <ul>
+        <li><a href="index.html">النسخة الحديثة</a></li>
+        <li><a href="legacy.html">النسخة المبسطة</a></li>
+      </ul>
+      <h4 style="margin-top:1.2rem">الخصوصية</h4>
+      <p style="font-size:.86rem;color:var(--txt-3)">كل البيانات تُعالَج داخل متصفحك ولا تُرسل إلى أي خادم.</p>
+    </div>
+  </div>
+
+  <div class="switch-bar">
+    <span>جهازك أو متصفحك بطيء؟ أو لا تريد المؤثرات؟</span>
+    <a href="legacy.html" id="toLegacy">التبديل إلى النسخة المبسطة</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="assets/js/schools.js?v=6"></script>
+<script src="assets/js/core.js?v=6"></script>
+<script src="assets/js/app.js?v=6"></script>
 </body>
 </html>

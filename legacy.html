@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4f46e5">
+<meta name="description" content="سجل المعلم — تعبئة سجل التقييم المدرسي بأسماء الطلاب، نسخة مبسطة تعمل على كل الأجهزة.">
+<title>سجل المعلم | النسخة المبسطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/legacy.css?v=6">
+</head>
+<body>
+
+<!-- ===================== الشريط ===================== -->
+<div class="topbar">
+  <div class="wrap">
+    <table>
+      <tr>
+        <td style="width:52px"><span class="ico">📒</span></td>
+        <td class="ttl-cell">
+          <span class="ttl">سجل المعلم<small>تعبئة سجل التقييم المدرسي</small></span>
+        </td>
+        <td class="links"><a href="index.html" id="toModern">النسخة الحديثة ✨</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- تنبيه التحويل التلقائي -->
+<div class="wrap">
+  <div class="note info" id="autoNote" style="display:none">
+    <b>تم فتح النسخة المبسطة تلقائياً</b>
+    جهازك أو متصفحك لا يدعم التصميم الحديث، فاخترنا هذه النسخة المناسبة. يمكنك العودة للنسخة الحديثة بالزر بالأعلى.
+  </div>
+</div>
+
+<!-- ===================== الوقت الموفّر ===================== -->
+<div class="wrap">
+  <div class="sec-head">
+    <span class="tag">⏱ وقتك ثمين</span>
+    <h2>كم يوفّر لك الوقت؟</h2>
+    <p>كل معلم يطبع في المتوسط ٥ سجلات فقط</p>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <table style="width:100%;border-collapse:separate;border-spacing:6px">
+        <tr>
+          <td style="text-align:center;padding:12px 6px;background:#fff;border:2px solid #e2e8f0;border-radius:14px">
+            <b style="display:block;font-size:20px;color:#059669">≈ ١ ساعة و٥٢ د</b>
+            <span style="font-size:12px;color:#64748b">بدل ساعة و٥٣ د<br>لـ ٥ سجلات</span>
+          </td>
+          <td style="text-align:center;padding:12px 6px;background:#fff;border:2px solid #e2e8f0;border-radius:14px">
+            <b style="display:block;font-size:20px;color:#059669">≈ ٣ س ٣٨ د</b>
+            <span style="font-size:12px;color:#64748b">بدل ٣ س ٤٠ د<br>لـ ١٠ سجلات</span>
+          </td>
+          <td style="text-align:center;padding:12px 6px;background:#fff;border:2px solid #e2e8f0;border-radius:14px">
+            <b style="display:block;font-size:20px;color:#059669">صفر أخطاء</b>
+            <span style="font-size:12px;color:#64748b">لا تكرار ولا خطأ<br>إملائي</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== الأداة ===================== -->
+<div class="wrap">
+  <div class="card" id="app">
+    <div class="card-head">
+      <h2>لوحة التعبئة</h2>
+      <p>اختر مدرستك ومرحلتك وفصلك — وتوليد مباشر بضغطة واحدة</p>
+      <div class="chips">
+        <span id="badgeSchool">🏫 مدرسة</span>
+        <span id="badgeStage">📚 مرحلة</span>
+        <span id="badgeClass">🚪 فصل</span>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <!-- 1 المدرسة -->
+      <div class="step">
+        <span class="step-title">١ · اختر المدرسة</span>
+        <table class="schools" id="schoolTable"><tbody></tbody></table>
+        <p class="hint" id="schoolHint"></p>
+      </div>
+
+      <!-- 2 المرحلة -->
+      <div class="step" id="stageStep">
+        <span class="step-title">٢ · المرحلة ونوع السجل</span>
+        <div class="seg" id="stageSeg"></div>
+        <div id="pdfWrap">
+          <label for="pdfSelect">نوع السجل (نموذج الـ PDF)</label>
+          <select id="pdfSelect"></select>
+        </div>
+      </div>
+
+      <!-- 3 الفصل -->
+      <div class="step" id="classStep">
+        <span class="step-title">٣ · اختر الفصل</span>
+        <table class="classes" id="classTable"><tbody></tbody></table>
+        <p class="hint" id="classHint"></p>
+      </div>
+
+      <!-- 4 الأسماء -->
+      <div class="step" id="autoStep">
+        <span class="step-title">٤ · أسماء الطلاب</span>
+        <div class="auto">
+          <span class="tick">✅</span>
+          <b id="autoTitle">اختر الفصل لتحميل الأسماء…</b>
+          <small id="autoSub">تُحمَّل قائمة الفصل تلقائياً — لا حاجة للكتابة</small>
+        </div>
+      </div>
+
+      <!-- 4ب الوضع اليدوي -->
+      <div class="step" id="manualStep" style="display:none">
+        <span class="step-title">٤ · أسماء طلابك</span>
+        <label for="customType">نوع السجل</label>
+        <select id="customType">
+          <option value="first_secondary">الصف الأول الثانوي</option>
+          <option value="second_secondary_bac">الصف الثاني الثانوي — بكالوريا</option>
+          <option value="second_secondary_general">الصف الثاني الثانوي — عام</option>
+        </select>
+        <div style="height:12px"></div>
+        <label for="customNames">اكتب كل اسم في سطر مستقل</label>
+        <textarea id="customNames" spellcheck="false"></textarea>
+        <p class="hint" id="customCount">٠ اسم</p>
+        <div class="btn-row">
+          <button type="button" class="btn-grey" id="customFileBtn">استيراد ملف txt</button>
+        </div>
+        <input type="file" id="customFile" style="display:none">
+      </div>
+
+      <!-- 5 الخط واللون -->
+      <div class="step">
+        <span class="step-title">٥ · الخط والمظهر</span>
+
+        <div class="row">
+          <div class="col" style="width:62%">
+            <label for="fontSelect">نوع الخط</label>
+            <select id="fontSelect"></select>
+          </div>
+          <div class="col right" style="width:34%">
+            <label for="fontSize">الحجم (٨–٢٠)</label>
+            <input type="number" id="fontSize" min="8" max="20" value="12">
+          </div>
+        </div>
+        <p class="hint" id="fontHint">الخطوط تُحمَّل عند اختيارها فقط</p>
+
+        <div style="height:12px"></div>
+        <span class="lbl">محاذاة الاسم داخل الخانة</span>
+        <table class="align">
+          <tr>
+            <td>
+              <label for="alRight">
+                <input type="radio" name="align" id="alRight" value="right" checked>
+                <span class="aline r"><i></i><i></i><i></i></span>
+                يمين
+              </label>
+            </td>
+            <td>
+              <label for="alCenter">
+                <input type="radio" name="align" id="alCenter" value="center">
+                <span class="aline ctr"><i></i><i></i><i></i></span>
+                وسط
+              </label>
+            </td>
+            <td>
+              <label for="alLeft">
+                <input type="radio" name="align" id="alLeft" value="left">
+                <span class="aline"><i></i><i></i><i></i></span>
+                يسار
+              </label>
+            </td>
+          </tr>
+        </table>
+
+        <div style="height:12px"></div>
+        <label for="textColor">لون نص الأسماء</label>
+        <select id="textColor">
+          <option value="#000000">أسود (افتراضي)</option>
+          <option value="#1d4ed8">أزرق</option>
+          <option value="#b91c1c">أحمر</option>
+          <option value="#047857">أخضر</option>
+          <option value="#7e22ce">بنفسجي</option>
+          <option value="#c2410c">برتقالي</option>
+          <option value="#0f766e">تركوازي</option>
+          <option value="#6b7280">رمادي</option>
+        </select>
+
+        <div style="height:12px"></div>
+        <span class="lbl">معاينة الخانة</span>
+        <div class="preview-box">
+          <canvas id="preview" width="900" height="110"></canvas>
+          <p class="preview-cap" id="previewHint"></p>
+        </div>
+      </div>
+
+      <!-- 6 التوليد -->
+      <div class="step">
+        <button type="button" id="genBtn">⬇ توليد السجل وتحميله</button>
+        <div class="bar" id="bar"><span id="barFill"></span></div>
+        <div id="status">جاهز — اختر المدرسة والفصل</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== الأسئلة ===================== -->
+  <div class="card">
+    <h2 class="q" id="q1">كيف أضيف مدرسة جديدة؟<span style="font-size:11px"> ▼</span></h2>
+    <div class="a" id="a1">
+      <p>اضغط «مدرستي غير موجودة» في الأعلى، ثم اكتب أسماء الطلاب واختر نوع السجل — وستحصل على الملف فوراً.</p>
+      <p>ولإضافة المدرسة بشكل دائم: أنشئ مجلداً باسمها وضع بداخله ملفات الأسماء
+        (كل ملف <span class="mono">1-1.txt</span> أو <span class="mono">2-1.txt</span>)،
+        ثم عدّل الملف <span class="mono">assets/js/schools.js</span> وأضف بيانات المدرسة.</p>
+    </div>
+
+    <h2 class="q" id="q2">ما الفرق بين النسختين؟<span style="font-size:11px"> ▼</span></h2>
+    <div class="a" id="a2">
+      <p>النسخة الحديثة فيها مؤثرات بصرية وأنيميشن ومعاينة حيّة ووضع ليلي.</p>
+      <p>هذه النسخة (المبسطة) خفيفة وبدون مؤثرات، وتعمل على الهواتف والأجهزة القديمة.</p>
+    </div>
+
+    <h2 class="q" id="q3">لماذا لا تظهر الأسماء في الملف؟<span style="font-size:11px"> ▼</span></h2>
+    <div class="a" id="a3">
+      <p>تأكد من اختيار المرحلة ونوع السجل الصحيح، وأن ملف الـ PDF موجود بنفس الاسم في نفس المجلد، وأن أسماء الطلاب موجودة.</p>
+    </div>
+  </div>
+
+  <!-- ===================== التواصل ===================== -->
+  <div class="card">
+    <div class="card-body center">
+      <span class="tag">لإضافة مدرستك</span>
+      <h2 style="font-size:19px;margin:6px 0">تواصل معنا على</h2>
+      <p style="font-size:17px;font-weight:800;direction:ltr;color:#4338ca">mnst.altalib@gmail.com</p>
+      <p class="hint" style="margin-top:10px">
+        أرسل لنا: اسم المدرسة والمرحلة، وعدد الفصول، وملفات قوائم الطلاب (نص أو PDF).
+      </p>
+      <div class="btn-row" style="margin-top:12px">
+        <button type="button" class="btn-orange" onclick="window.location.href='mailto:mnst.altalib@gmail.com?subject=%D8%A5%D8%B6%D8%A7%D9%81%D8%A9%20%D9%85%D8%AF%D8%B1%D8%B3%D8%A9'">إرسال رسالة بريد</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== التذييل ===================== -->
+<div class="wrap">
+  <div class="foot">
+    <div class="cols">
+      <div>
+        <h4>روابط سريعة</h4>
+        <a href="#app">لوحة التعبئة</a><br>
+        <a href="#q1">الأسئلة الشائعة</a>
+      </div>
+      <div>
+        <h4>النسخ</h4>
+        <a href="index.html" id="toModern2">النسخة الحديثة</a><br>
+        <a href="legacy.html">النسخة المبسطة</a>
+      </div>
+      <div>
+        <h4>الخصوصية</h4>
+        <span class="tt">كل البيانات تُعالَج داخل جهازك ولا تُرسل إلى أي خادم.</span>
+      </div>
+    </div>
+    <p class="sig">Ali Yasser Ahmed</p>
+    <p class="sig-cap">Designed &amp; developed by</p>
+  </div>
+  <div class="switch-bar">
+    هل تريد التصميم الحديث والمؤثرات؟
+    <a href="index.html" id="toModern2">التبديل إلى النسخة الحديثة</a>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="assets/js/schools.js?v=6"></script>
+<script src="assets/js/core.js?v=6"></script>
+<script src="assets/js/legacy-app.js?v=6"></script>
+<script>
+/* التحويل التلقائي + تذكّر اختيار المستخدم */
+(function () {
+  var q = String(location.search || '');
+  var note = document.getElementById('autoNote');
+  if (note) { note.style.display = /[?&]auto=1/.test(q) ? 'block' : 'none'; }
+
+  function remember() {
+    try { localStorage.setItem('mansa_version', 'modern'); } catch (e) {}
+  }
+  var a1 = document.getElementById('toModern'), a2 = document.getElementById('toModern2');
+  if (a1) { a1.onclick = remember; }
+  if (a2) { a2.onclick = remember; }
+}());
+</script>
+</body>
+</html>

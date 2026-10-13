@@ -1,0 +1,307 @@
+@charset "UTF-8";
+/* ============================================================================
+   legacy.css — نسخة «سجل المعلم» المبسطة
+   شكلها قريب من النسخة الحديثة، لكنها لا تستخدم أي ميزة حديثة:
+   لا Flexbox ولا Grid ولا متغيرات CSS ولا حركة ولا مؤثرات ثقيلة.
+   تعمل على المتصفحات القديمة والهواتف الضعيفة.
+   ========================================================================== */
+
+/* ------------------------------- الأساس --------------------------------- */
+html{ overflow-x:hidden; }
+body{
+  margin:0; padding:0;
+  background:#f4f6fc;
+  background-image:linear-gradient(180deg,#eef1fb 0%,#f4f6fc 420px);
+  background-repeat:no-repeat;
+  color:#1e293b;
+  font-family:'Cairo',Tahoma,"Segoe UI",Arial,sans-serif;
+  font-size:15px; line-height:1.85;
+  overflow-x:clip;
+}
+*{ box-sizing:border-box; }
+img,table,select,input,textarea,canvas{ max-width:100%; }
+a{ color:#4338ca; }
+h1,h2,h3{ margin:0; }
+p{ margin:0 0 8px; }
+ul{ margin:0; padding:0; list-style:none; }
+.center{ text-align:center; }
+.mono{ font-family:"Courier New",monospace; background:#eef2ff; padding:1px 5px; direction:ltr; display:inline-block; border-radius:4px; }
+
+/* --------------------------- شريط التمرير ------------------------------- */
+html{ scrollbar-color:#818cf8 #e2e8f0; }
+::-webkit-scrollbar{ width:12px; height:12px; }
+::-webkit-scrollbar-track{ background:#e2e8f0; border-radius:20px; }
+::-webkit-scrollbar-thumb{
+  border-radius:20px; border:3px solid #e2e8f0; background-clip:content-box; background-color:transparent;
+  background-image:linear-gradient(180deg,#818cf8,#0d9488); min-height:40px;
+}
+::-webkit-scrollbar-thumb:hover{ background-image:linear-gradient(180deg,#4f46e5,#0f766e); }
+::-webkit-scrollbar-corner{ background:#e2e8f0; }
+@media (max-width:600px){
+  ::-webkit-scrollbar{ width:6px; height:6px; }
+  ::-webkit-scrollbar-thumb{ border-width:1.5px; }
+}
+
+.wrap{ width:100%; max-width:1000px; margin:0 auto; padding:0 14px; }
+
+/* ------------------------------ الشريط ---------------------------------- */
+.topbar{
+  background:#312e81;
+  background-image:linear-gradient(135deg,#312e81 0%,#4f46e5 55%,#0d9488 130%);
+  color:#fff; padding:12px 0;
+  border-bottom:4px solid #f59e0b;
+}
+/* الشريط: الشعار يمين والأزرار يسار — دائماً */
+.topbar table{ width:100%; border:0; border-collapse:collapse; table-layout:auto; }
+.topbar td{ border:0; padding:0; vertical-align:middle; }
+.topbar .ttl-cell{ text-align:right; }
+.topbar .links{ text-align:left; width:1%; white-space:nowrap; }
+.topbar .ttl{ font-size:19px; font-weight:900; }
+.topbar .ttl small{ display:block; font-size:11px; font-weight:600; opacity:.8; line-height:1.2; }
+.topbar .ico{
+  width:40px; height:40px; border-radius:12px; text-align:center; line-height:40px;
+  background:rgba(255,255,255,.18); font-size:20px; margin-left:8px;
+}
+.topbar .links{ text-align:left; font-size:13px; }
+.topbar .links a{ color:#fde68a; display:inline-block; padding:8px 10px; }
+
+/* ------------------------------ الأقسام --------------------------------- */
+.section{ padding:16px 0; }
+.sec-head{ text-align:center; margin:26px 0 18px; }
+.tag{
+  display:inline-block; background:#e0e7ff; color:#4338ca; font-size:12px; font-weight:800;
+  padding:4px 12px; border-radius:20px; margin-bottom:8px;
+}
+.sec-head h2{ font-size:22px; font-weight:900; color:#1e293b; line-height:1.5; }
+.sec-head p{ font-size:14px; color:#64748b; margin:6px 0 0; }
+
+/* ------------------------------- البطاقات ------------------------------- */
+.card{
+  background:#fff; border:1px solid #e2e8f0; border-radius:20px;
+  box-shadow:0 10px 26px -14px rgba(49,46,129,.35);
+  margin-bottom:16px; overflow:hidden;
+}
+.card-head{
+  padding:16px 18px; color:#fff;
+  background-image:linear-gradient(120deg,#312e81,#4f46e5 45%,#0d9488);
+}
+.card-head h2{ font-size:17px; font-weight:900; }
+.card-head p{ font-size:12.5px; opacity:.88; margin:4px 0 0; }
+.chips{ margin-top:10px; }
+.chips span{
+  display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28);
+  border-radius:20px; padding:4px 11px; font-size:12px; font-weight:800; margin:0 4px 4px 0;
+}
+.card-body{ padding:16px 18px; }
+
+/* ------------------------------- الحقول -------------------------------- */
+.step{ margin:0 0 20px; }
+.step:last-child{ margin-bottom:0; }
+.step-title{
+  display:inline-block; background:#4f46e5; color:#fff; font-size:12px; font-weight:800;
+  border-radius:20px; padding:3px 12px; margin-bottom:10px;
+}
+label,.lbl{ display:block; font-weight:800; font-size:14px; color:#334155; margin:0 0 6px; }
+
+select,input[type="number"],input[type="text"],textarea{
+  width:100%; padding:12px 12px; border:2px solid #dbe2f0; border-radius:12px;
+  background:#f8fafc; color:#0f172a;
+  font-family:'Cairo',Tahoma,Arial,sans-serif; font-size:16px; line-height:1.7;
+}
+select:focus,input:focus,textarea:focus{ border-color:#4f46e5; background:#fff; outline:none; }
+textarea{ height:190px; resize:vertical; }
+.hint{ font-size:12.5px; color:#64748b; margin:6px 0 0; line-height:1.7; }
+
+.row{ margin:0 0 12px; }
+.row:after{ content:""; display:table; clear:both; }
+.col{ float:left; width:48%; }
+.col.right{ float:right; }
+@media (max-width:600px){ .col,.col.right{ float:none; width:100%; } }
+
+/* ------------------------------ الأزرار -------------------------------- */
+button,.btn{
+  display:block; width:100%; padding:14px; margin:0;
+  border:0; border-radius:14px;
+  background-image:linear-gradient(135deg,#4f46e5,#4338ca);
+  color:#fff; font-family:'Cairo',Tahoma,Arial,sans-serif;
+  font-size:17px; font-weight:800; line-height:1.6; cursor:pointer;
+  box-shadow:0 10px 20px -12px rgba(67,56,202,.9);
+}
+.btn-green{ background-image:linear-gradient(135deg,#10b981,#047857); box-shadow:0 10px 20px -12px rgba(5,150,105,.9); }
+.btn-grey{ background-image:linear-gradient(135deg,#94a3b8,#64748b); box-shadow:none; }
+.btn-orange{ background-image:linear-gradient(135deg,#f97316,#c2410c); box-shadow:0 10px 20px -12px rgba(194,65,12,.9); }
+.btn-row{ margin-top:8px; }
+.btn-row .btn, .btn-row button{ margin-bottom:8px; }
+
+/* --------------------------- بطاقات المدرسة ---------------------------- */
+table.schools{ width:100%; border-collapse:collapse; }
+table.schools td{ padding:5px 0; vertical-align:middle; }
+table.schools .em{ width:46px; }
+table.schools .em span{
+  display:block; width:42px; height:42px; border-radius:13px; text-align:center; line-height:42px;
+  font-size:20px; background:#eef2ff; border:1px solid #e2e8f0;
+}
+table.schools button{
+  text-align:right; padding:10px 14px; font-size:15px;
+  background:#f8fafc; color:#1e293b; border:2px solid #dbe2f0; box-shadow:none;
+  border-radius:14px; line-height:1.6;
+}
+table.schools button small{ display:block; font-size:12px; font-weight:700; color:#64748b; }
+table.schools button.on{
+  background-image:linear-gradient(135deg,#4f46e5,#4338ca); color:#fff; border-color:#312e81; box-shadow:none;
+}
+table.schools button.on small{ color:rgba(255,255,255,.85); }
+table.schools button.custom{ background:#fff; border-style:dashed; }
+
+/* --------------------------- تبويب المرحلة ----------------------------- */
+.seg{ background:#eef2f7; border-radius:16px; padding:5px; margin:0 0 12px; }
+.seg button{
+  display:inline-block; width:48%; padding:11px 6px; border-radius:12px; font-size:14px;
+  background:transparent; color:#475569; box-shadow:none; font-weight:800;
+}
+.seg button.on{ background:#fff; color:#3730a3; }
+
+/* ------------------------------ الفصول --------------------------------- */
+table.classes{ width:100%; border-collapse:separate; border-spacing:5px; }
+table.classes td{ padding:0; width:20%; }
+table.classes button{
+  padding:11px 2px; font-size:14px; background:#f8fafc; color:#1e293b;
+  border:2px solid #dbe2f0; box-shadow:none; border-radius:13px; line-height:1.5;
+}
+table.classes button small{ display:block; font-size:11px; font-weight:700; color:#64748b; }
+table.classes button.on{
+  background-image:linear-gradient(140deg,#6366f1,#4338ca); color:#fff; border-color:#3730a3; box-shadow:none;
+}
+table.classes button.on small{ color:rgba(255,255,255,.85); }
+
+/* --------------------------- الأسماء التلقائية ------------------------- */
+.auto{
+  padding:14px 16px; border:2px solid #e2e8f0; border-radius:16px; background:#f8fafc;
+}
+.auto .tick{
+  display:inline-block; width:38px; height:38px; line-height:38px; text-align:center;
+  border-radius:12px; background:#d1fae5; color:#047857; font-size:19px;
+  margin-left:10px; vertical-align:middle;
+}
+.auto b{ font-size:15px; }
+.auto small{ display:block; font-size:12.5px; color:#64748b; }
+
+/* ------------------------------ المحاذاة -------------------------------- */
+table.align{ width:100%; border-collapse:separate; border-spacing:5px; table-layout:fixed; }
+table.align td{ padding:0; text-align:center; vertical-align:top; position:relative; }
+table.align label{
+  display:block; margin:0; padding:12px 4px; min-height:56px; cursor:pointer;
+  border:2px solid #dbe2f0; border-radius:13px; background:#f8fafc;
+  font-size:14px; font-weight:800; color:#334155;
+}
+table.align label.on{ border-color:#4f46e5; background:#e0e7ff; color:#3730a3; }
+table.align input{ position:absolute; width:1px; height:1px; opacity:0; overflow:hidden; clip:rect(0 0 0 0); }
+.aline{ display:block; height:18px; margin:0 auto 6px; width:32px; }
+.aline i{ display:block; height:3px; background:#cbd5e1; margin-bottom:3px; }
+table.align label.on .aline i{ background:#4f46e5; }
+.aline.r i:last-child{ margin-left:auto; margin-right:0; }
+.aline.ctr i{ margin-left:auto; margin-right:auto; }
+
+/* ------------------------------- الألوان -------------------------------- */
+.sw-picks{ margin:0 0 4px; }
+.sw-picks span{
+  display:inline-block; width:34px; height:34px; border-radius:10px; margin:0 6px 6px 0;
+  border:2px solid #e2e8f0;
+}
+
+/* ------------------------------ المعاينة -------------------------------- */
+.preview-box{ padding:10px; background:#fff; border:2px dashed #cbd5e1; border-radius:16px; text-align:center; }
+canvas#preview{ width:100%; background:#fff; display:block; }
+.preview-cap{ font-size:12.5px; color:#64748b; margin:6px 0 0; }
+
+/* ---------------------------- الحالة والتقدم ---------------------------- */
+.bar{ height:12px; border-radius:20px; background:#e2e8f0; margin:12px 0 0; padding:2px; display:none; }
+.bar.on{ display:block; }
+.bar span{
+  display:block; height:8px; width:0; border-radius:20px;
+  background-image:linear-gradient(90deg,#6366f1,#0d9488,#f59e0b);
+}
+#status{
+  margin-top:12px; padding:13px; border-radius:14px; text-align:center;
+  font-weight:800; font-size:14px; border:1px solid #e2e8f0; background:#f8fafc; color:#475569;
+}
+#status.info{ border-color:#c7d2fe; background:#eef2ff; color:#4338ca; }
+#status.ok{ border-color:#a7f3d0; background:#ecfdf5; color:#047857; }
+#status.err{ border-color:#fecaca; background:#fef2f2; color:#b91c1c; }
+
+.note{ padding:13px 15px; margin-top:14px; border-radius:14px; font-size:13px; border:1px solid #fcd34d; background:#fffbeb; color:#92400e; }
+.note.info{ border-color:#c7d2fe; background:#eef2ff; color:#3730a3; }
+.note b{ display:block; margin-bottom:4px; }
+.note .btn{ margin-top:10px; }
+
+/* ------------------------------- الأسئلة ------------------------------- */
+h2.q{
+  cursor:pointer; padding:13px 16px; margin:0; font-size:15px; font-weight:800; color:#3730a3;
+  background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px 14px 0 0;
+}
+div.a{ display:none; padding:15px; font-size:14px; border:1px solid #e2e8f0; border-top:0; background:#fff; border-radius:0 0 14px 14px; }
+div.a p{ margin:0 0 8px; }
+div.a p:last-child{ margin-bottom:0; }
+
+/* ------------------------------- التذييل ------------------------------- */
+.foot{ text-align:center; padding:22px 0 16px; margin-top:8px; border-top:1px solid #e2e8f0; }
+.foot p{ font-size:13.5px; color:#64748b; }
+.foot .cols{ display:table; width:100%; border-collapse:collapse; margin-bottom:14px; }
+.foot .cols > div{ display:table-cell; width:33.33%; vertical-align:top; padding:0 6px; }
+.foot .cols h4{ font-size:14px; font-weight:800; color:#334155; margin:0 0 6px; }
+.foot .cols a{ display:inline-block; padding:6px 3px; font-size:13px; }
+.foot .cols .tt{ font-size:12.5px; color:#64748b; line-height:1.8; }
+/* على الجوال تبقى الأعمدة الثلاثة جنباً إلى جنب */
+@media (max-width:520px){
+  .foot .cols > div{ padding:0 3px; }
+  .foot .cols h4{ font-size:12.5px; }
+  .foot .cols a{ font-size:12px; padding:8px 2px; }
+  .foot .cols .tt{ font-size:11px; }
+}
+.sig{ font-family:"Kaushan Script","Segoe Script","Comic Sans MS",Tahoma,cursive; font-size:24px; color:#4f46e5; direction:ltr; line-height:1.8; }
+.sig-cap{ font-size:11px; letter-spacing:2px; color:#94a3b8; }
+.switch-bar{
+  margin:0 14px 24px; padding:13px 14px; text-align:center;
+  border:2px dashed #cbd5e1; border-radius:16px; background:#fff; font-size:13px; color:#64748b;
+}
+.switch-bar a{ display:inline-block; margin-top:5px; padding:6px 4px; font-weight:800; }
+
+/* --------------------------- توافق الهاتف ------------------------------ */
+@media (max-width:600px){
+  body{ font-size:16px; }
+  .wrap{ padding:0 12px; }
+  .topbar .ttl{ font-size:17px; }
+  .topbar .links{ font-size:12px; }
+  .topbar .links a{ padding:8px 4px; }
+  .sec-head h2{ font-size:19px; }
+  .card{ border-radius:16px; }
+  .card-head{ padding:14px; }
+  .card-head h2{ font-size:16px; }
+  .card-body{ padding:14px; }
+  .chips span{ font-size:11.5px; padding:3px 9px; }
+
+  select,input[type="number"],input[type="text"],textarea{ font-size:16px; padding:13px; }
+  button,.btn{ padding:15px 12px; font-size:16px; border-radius:13px; }
+
+  table.classes{ border-spacing:4px; }
+  table.classes td{ width:20%; }
+  table.classes button{ padding:11px 0; font-size:13px; }
+  table.classes button small{ font-size:10px; }
+  table.align label{ padding:10px 2px; font-size:13px; min-height:52px; }
+  .sw-picks span{ width:38px; height:38px; margin:0 5px 5px 0; }
+  .switch-bar{ margin:0 12px 18px; }
+}
+
+@media (max-width:380px){
+  table.classes{ border-spacing:3px; }
+  table.classes button{ font-size:12px; padding:10px 0; }
+  table.classes button small{ font-size:9px; }
+  .topbar .ico{ display:none; }
+}
+
+/* مؤثرات تُضاف للمتصفحات الحديثة فقط */
+@media (min-width:601px) and (min-resolution:1dppx){
+  .btn,.btn-green,.btn-orange{ transition:transform .2s ease, box-shadow .2s ease; }
+  .btn:hover,.btn-green:hover,.btn-orange:hover{ transform:translateY(-2px); }
+  .card{ transition:box-shadow .3s ease; }
+}
